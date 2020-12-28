@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   # rootはlocalhost:3000にきた時にルーティング
   # resources :boards, only: [:index, :new, :create, :show, :edit, :update] 
   resources :boards
+  resources :comments, only: %i[create destroy]
 end
