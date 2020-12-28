@@ -7,13 +7,20 @@ class BoardsController < ApplicationController
 
     def new
         # controller内で定義したインスタンス変数はビュー内で参照できる
-        @board = Board.new
+        @board = Board.new(flash[:board])
     end
 
     def create
-        board = Board.create(board_params)
-        flash[:notice] = "「#{board.title}」の掲示板を作成しました。"
-        redirect_to board
+        board = Board.new(board_params)
+        if board.save
+            flash[:notice] = "「#{board.title}」の掲示板を作成しました。"
+            redirect_to board
+        else
+            redirect_to new_board_path, flash: {
+                board: board, # リダイレクトした時に内容を残しておくため
+                error_messages: board.errors.full_messages
+            }
+        end
     end
 
     def show
