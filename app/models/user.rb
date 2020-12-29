@@ -13,4 +13,17 @@
 #  index_users_on_name  (name) UNIQUE
 #
 class User < ApplicationRecord
+    # password属性とpassword_confirmation属性が追加される
+    has_secure_password
+    validates: :name,
+        presence: true,
+        uniqueness: true,
+        length: { maximum: 16 },
+        format: {
+            # \Aが行頭、\z行末
+            with: /\A[a-z0-9]+\z/,
+            message: 'は小文字英数字で入力してください。'
+        }
+    validates: :password_digest,
+        length: { minimum: 8 }
 end
