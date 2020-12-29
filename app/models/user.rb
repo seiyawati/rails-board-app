@@ -15,7 +15,7 @@
 class User < ApplicationRecord
     # password属性とpassword_confirmation属性が追加される
     has_secure_password
-    validates: :name,
+    validates :name,
         presence: true,
         uniqueness: true,
         length: { maximum: 16 },
@@ -24,6 +24,6 @@ class User < ApplicationRecord
             with: /\A[a-z0-9]+\z/,
             message: 'は小文字英数字で入力してください。'
         }
-    validates: :password_digest,
+    validates :password_digest,
         length: { minimum: 8 }
 end
